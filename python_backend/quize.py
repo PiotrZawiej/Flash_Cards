@@ -1,4 +1,4 @@
-import database_comments as dbc
+import python_backend.database_comments as dbc
 import random as r
 
 def quiz():

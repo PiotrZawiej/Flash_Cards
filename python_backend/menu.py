@@ -1,5 +1,5 @@
-import database_comments as dbc
-import quize as q
+import python_backend.database_comments as dbc
+import python_backend.quize as q
 
 
 def menu():

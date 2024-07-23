@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-import database_comments as dbc
+import python_backend.database_comments as dbc
 from typing import List,Dict
 from pydantic import BaseModel
 
@@ -17,13 +17,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Word(BaseModel):
-    word: str
-    definition: str
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"App": "Flashcards"}
 
 
 @app.get("/learn_words")
@@ -31,6 +28,11 @@ def read_words() -> List[Dict[str, str]]:
     records = dbc.import_table_content()  # Fetch data from the database
     words = [{"word": r[0], "definition": r[1]} for r in records]  # Format each record
     return words
+
+
+class Word(BaseModel):
+    word: str
+    definition: str
 
 @app.post("/add_word")
 def add_words(word: Word):
