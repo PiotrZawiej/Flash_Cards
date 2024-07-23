@@ -15,24 +15,6 @@
         <button type="submit">Add Word</button>
     </form>
 
-    <script>
-        document.getElementById('wordForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const word = document.getElementById('word').value;
-            const definition = document.getElementById('definition').value;
-
-            const response = await fetch('http://localhost:8000/add_word', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ word, definition })
-            });
-
-            const result = await response.json();
-            alert(result.message);
-        });
-    </script>
+    <script src="webScript.js"></script>
 </body>
 </html>
