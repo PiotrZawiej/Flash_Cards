@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-import python_backend.database_comments as dbc
+from python_backend.database_comments import import_table_content
+from python_backend.database_comments import add_content_table
 from typing import List,Dict
 from pydantic import BaseModel
 
@@ -25,7 +26,7 @@ def read_root():
 
 @app.get("/learn_words")
 def read_words() -> List[Dict[str, str]]:
-    records = dbc.import_table_content()  # Fetch data from the database
+    records = import_table_content()  # Fetch data from the database
     words = [{"word": r[0], "definition": r[1]} for r in records]  # Format each record
     return words
 
@@ -37,7 +38,13 @@ class Word(BaseModel):
 @app.post("/add_word")
 def add_words(word: Word):
     try:
-        dbc.add_content_table(word.word, word.definition)
+        add_content_table(word.word, word.definition)
         return {"message", "word added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 
+    
+@app.get("/quiz_words")
+def get_quiz_words() -> List[Dict[str, str]]:
+    records = import_table_content()  # Fetch data from the database
+    words = [{"word": r[0], "definition": r[1]} for r in records]  # Format each record
+    return words
