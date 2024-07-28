@@ -6,8 +6,7 @@ def menu():
     choice = input("Please choose what you're going to do\n"+
                    "1. Update words and defnitions \n" + 
                    "2. Learn words \n" +
-                   "3. Quiz \n" +
-                   "4. Quit \n")
+                   "3. Quit \n")
 
     match choice:
 
@@ -22,11 +21,8 @@ def menu():
         case "2":
             for r in dbc.import_table_content():
                 print(r[0] + " - " + r[1])
-        
-        case "3":
-            q.quiz()
 
-        case "4":
+        case "3":
             print("Closing program")
 
         case _:
