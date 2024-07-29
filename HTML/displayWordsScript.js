@@ -21,7 +21,7 @@ async function displayWords(words) {
         wordTitle.className = "wordTitle"
         wordTitle.textContent = wordObj.word;
 
-        wordTitle.addEventListener("click", function handleClick() {
+        wordItem.addEventListener("click", function handleClick() {
             // Sprawdź, czy definicja już istnieje
             let existingDefinition = wordItem.querySelector('.definition');
             

@@ -1,0 +1,32 @@
+
+
+.word-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+    box-shadow: 0 0 20px rgb(216, 215, 215);
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.wordTitle {
+    font-size: 2em;
+}
+
+.definition {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+#wordList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
