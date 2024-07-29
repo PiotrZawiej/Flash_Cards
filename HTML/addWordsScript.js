@@ -1,5 +1,5 @@
 document.getElementById('wordForm').addEventListener('submit', async function(event) {
-    event.preventDefault();  // Prevent the form from submitting the traditional way
+    event.preventDefault();  
 
     const word = document.getElementById('word').value;
     const definition = document.getElementById('definition').value;
