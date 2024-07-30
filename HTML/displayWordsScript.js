@@ -17,21 +17,21 @@ async function displayWords(words) {
         const wordItem = document.createElement('div');
         wordItem.className = 'word-item';
 
+        const deleteButton = document.createElement('button');
+        
+
         const wordTitle = document.createElement('h3');
         wordTitle.className = "wordTitle"
         wordTitle.textContent = wordObj.word;
 
         wordItem.addEventListener("click", function handleClick() {
-            // Sprawdź, czy definicja już istnieje
             let existingDefinition = wordItem.querySelector('.definition');
             
             if (existingDefinition) {
-                // Jeśli istnieje, usuń ją
                 existingDefinition.remove();
             } else {
-                // Jeśli nie istnieje, dodaj ją
                 const wordDefinition = document.createElement('div');
-                wordDefinition.className = 'definition'; // Dodajemy klasę, aby łatwo identyfikować definicję
+                wordDefinition.className = 'definition'; 
                 wordDefinition.innerHTML = wordObj.definition;
                 wordItem.appendChild(wordDefinition);
             }

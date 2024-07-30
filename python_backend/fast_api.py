@@ -23,11 +23,18 @@ def read_root():
     return {"App": "Flashcards"}
 
 
-@app.get("/learn_words")
+app.get("/learn_words", response_model=List[Dict[str, str]])
 def read_words() -> List[Dict[str, str]]:
-    records = dbc.import_table_content()  # Fetch data from the database
-    words = [{"word": r[0], "definition": r[1]} for r in records]  # Format each record
-    return words
+    try:
+        records = dbc.import_table_content()  # Fetch data from the database
+        if not records:
+            raise HTTPException(status_code=404, detail="No words found")
+
+        words = [{"word": r[0], "definition": r[1]} for r in records]  # Format each record
+        return words
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 class Word(BaseModel):
@@ -38,6 +45,15 @@ class Word(BaseModel):
 def add_words(word: Word):
     try:
         dbc.add_content_table(word.word, word.definition)
-        return {"message", "word added successfully"}
+        return {"message": "word added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 
+
+
+@app.delete("/learn_words/{id}")
+def deleteFlashCard(id: int):
+    try:
+        dbc.delete_table_content(id)
+        return {"message": "word deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
