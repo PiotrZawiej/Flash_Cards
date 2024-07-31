@@ -44,7 +44,7 @@ async function displayWords(words) {
 
         wordItem.appendChild(wordTitle);
 
-        wordItem.appendChild(deleteButton);
+        wordItem.appendChild(deleteButton)
 
         wordList.appendChild(wordItem);
     });

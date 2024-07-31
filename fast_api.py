@@ -23,7 +23,7 @@ def read_root():
     return {"App": "Flashcards"}
 
 
-app.get("/learn_words", response_model=List[Dict[str, str]])
+@app.get("/learn_words", response_model=List[Dict[str, str]])
 def read_words() -> List[Dict[str, str]]:
     try:
         records = dbc.import_table_content()  # Fetch data from the database
@@ -35,6 +35,8 @@ def read_words() -> List[Dict[str, str]]:
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
 
 
 class Word(BaseModel):
@@ -50,7 +52,7 @@ def add_words(word: Word):
         raise HTTPException(status_code=500, detail=str(e)) 
 
 
-@app.delete("/learn_words")
+@app.delete("/learn_words/{id}")
 def deleteFlashCard(id: int):
     try:
         dbc.delete_table_content(id)
