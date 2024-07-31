@@ -1,3 +1,6 @@
+import { createDeleteButton } from "./delateWord.js";
+
+
 async function fetchWords() {
     try {
         const response = await fetch('http://localhost:8000/learn_words');
@@ -15,10 +18,7 @@ async function displayWords(words) {
 
     words.forEach(wordObj => {
         const wordItem = document.createElement('div');
-        wordItem.className = 'word-item';
-
-        const deleteButton = document.createElement('button');
-        
+        wordItem.className = 'word-item'; 
 
         const wordTitle = document.createElement('h3');
         wordTitle.className = "wordTitle"
@@ -38,10 +38,13 @@ async function displayWords(words) {
         });
         
 
+        const deleteButton = createDeleteButton(wordItem, wordObj.id)
         
         
 
         wordItem.appendChild(wordTitle);
+
+        wordItem.appendChild(deleteButton);
 
         wordList.appendChild(wordItem);
     });
