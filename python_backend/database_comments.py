@@ -25,7 +25,7 @@ def import_table_content():
         db = sqlite3.connect('words_data.db')
         cursor = db.cursor()
 
-        cursor.execute('SELECT word, definition FROM words_new')
+        cursor.execute('SELECT * FROM words_new')
         rows = cursor.fetchall()
 
         return rows
