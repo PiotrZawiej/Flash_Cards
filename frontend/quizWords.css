@@ -33,20 +33,6 @@ h1 {
     font-size: 100%;
 }
 
-#answer-input {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-}
-
-#answer-input {
-    margin-right: 10px;
-}
-
-.quiz-option label {
-    font-size: 1.2em;
-}
-
 .quiz-submit {
     margin-top: 20px;
     padding: 15px 30px;
