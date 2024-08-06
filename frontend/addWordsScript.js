@@ -16,6 +16,11 @@ document.getElementById('wordForm').addEventListener('submit', async function(ev
         if (response.ok) {
             const result = await response.json();
             alert(result.message);
+
+            document.getElementById('word').value = '';
+            document.getElementById('definition').value = '';
+
+            fetchWords();
         } else {
             const error = await response.json();
             alert(`Error: ${error.detail}`);

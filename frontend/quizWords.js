@@ -23,10 +23,10 @@ let quizWords = []
                 document.getElementById("quizContainer").innerHTML = 
                 `
                 <div class="quiz-item">
-                        <p>What's that word?</p>
+                        <p">What's that word?</p>
                         <p>${wordItem.definition}</p>
                         <input type="text" id="answerInput">
-                        <button onclick="checkWord()">Submit Answer</button>
+                        <button class = "quiz-submit" onclick="checkWord()">Submit Answer</button>
                         <p id="feedback"></p>
                     </div>
                 `;

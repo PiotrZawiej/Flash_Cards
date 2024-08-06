@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Zmiana justify-content na flex-start, aby header był na samej górze */
+    margin: auto;
+    height: 100vh;
+    align-items: center;
+}
+
+#wordForm {
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#wordForm label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em; 
+}
+
+#wordForm input {
+    width: 100%; 
+    box-sizing: border-box; 
+    padding: 15px; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1em; 
+}
+
+#wordForm button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 15px 30px; 
+    font-size: 1.3em; 
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#wordForm button:hover {
+    background-color: #218838;
+}
