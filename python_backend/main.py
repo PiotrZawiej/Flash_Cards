@@ -1,3 +1,5 @@
-import python_backend.menu as menu
+from database_comments import createTable
 
-menu.menu()
+createTable()
+
+
