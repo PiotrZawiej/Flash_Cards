@@ -52,17 +52,18 @@ def delete_table_content(id):
         db.close()
         
 
-def createTable():
-    db = sqlite3.connect('words_data.db')
-    cursor = db.cursor()
-    
-    cursor.execute('''CREATE TABLE Users (
-                    user_id INTEGER PRIMARY KEY,  -- Automatyczny klucz główny dla użytkownika
-                    email VARCHAR(255) NOT NULL UNIQUE,      -- Adres e-mail, unikalny
-                    username VARCHAR(100) NOT NULL,          -- Nazwa użytkownika
-                    password VARCHAR(255) NOT NULL,          -- Hasło (najlepiej przechowywane jako hash)
-                    birth_date DATE NOT NULL                 -- Data urodzenia
-                    );''')
-    
-    db.commit()  # Wywołanie funkcji commit()
-    db.close()   # Wywołanie funkcji close()    
+def Insert_User(email, username, password, birth_date):
+    try:
+        db = sqlite3.connect("words_date.db")
+        cursor = db.cursor()
+        
+        cursor.execute('INSERT INTO Users (email, username, password, birth_date) VALUES (?, ?, ?, ?)', (email, username, password, birth_date))
+        
+        db.commit()
+        
+    except sqlite3.Error as e:
+        print(f"an error occurred:{e}")
+    finally:
+        db.close()
+        
+        

@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 import python_backend.database_comments as dbc
 
+
 app = FastAPI()
 
 app.add_middleware(
@@ -56,3 +57,21 @@ def deleteFlashCard(id: int):
         return {"message": "word deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+    
+    
+class User(BaseModel):
+    email: str
+    username: str
+    password: str
+    birth_date: str
+    
+    
+@app.post("/register")
+def register_user(user: User):
+    try:
+        dbc.Insert_User(user.email, user.username, user.password, user.birth_date)
+        return {"message": "User added successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+        
