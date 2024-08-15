@@ -7,7 +7,7 @@ def add_content_table(word, definition):
         db = sqlite3.connect('words_data.db') 
         cursor = db.cursor()
 
-        cursor.execute('INSERT INTO words_new (word, definition) values (?, ?)', (word, definition))
+        cursor.execute('INSERT INTO Words (word, definition) values (?, ?)', (word, definition))
 
         db.commit()
 
@@ -54,7 +54,7 @@ def delete_table_content(id):
 
 def Insert_User(email, username, password, birth_date):
     try:
-        db = sqlite3.connect("words_date.db")
+        db = sqlite3.connect("words_data.db")
         cursor = db.cursor()
         
         cursor.execute('INSERT INTO Users (email, username, password, birth_date) VALUES (?, ?, ?, ?)', (email, username, password, birth_date))
