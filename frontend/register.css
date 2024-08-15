@@ -8,7 +8,7 @@ body {
     margin: 0;
 }
 
-.register-form {
+#register-form {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
@@ -18,12 +18,12 @@ body {
     flex-direction: column;
 }
 
-.register-form label {
+#register-form label {
     margin-bottom: 5px;
     font-size: 1.1em;
 }
 
-.register-form input {
+#register-form input {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -33,7 +33,7 @@ body {
     box-sizing: border-box;
 }
 
-.register-form button {
+#register-form button {
     padding: 10px;
     border: none;
     background-color: #28a745;
@@ -43,6 +43,6 @@ body {
     cursor: pointer;
 }
 
-.register-form button:hover {
+#register-form button:hover {
     background-color: #218838;
 }
