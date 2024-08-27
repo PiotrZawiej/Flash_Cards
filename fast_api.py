@@ -74,4 +74,4 @@ def register_user(user: User):
         return {"message": "User added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-        
+      

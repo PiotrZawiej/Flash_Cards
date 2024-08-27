@@ -66,4 +66,28 @@ def Insert_User(email, username, password, birth_date):
     finally:
         db.close()
         
+# def create_tables():
+#     try:
+#         db = sqlite3.connect('words_data.db')
+#         cursor = db.cursor()
+        
+#         cursor.execute('''
+#         CREATE TABLE IF NOT EXISTS Users (
+#             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#             email VARCHAR(255) NOT NULL UNIQUE,
+#             username VARCHAR(100) NOT NULL,
+#             password VARCHAR(255) NOT NULL,
+#             birth_date DATE NOT NULL
+#         );
+#         ''')
+        
+#         db.commit()
+#     except sqlite3.Error as e:
+#         print(f"An error occurred: {e}")
+#     finally:
+#         db.close()
+
+
+
+        
         

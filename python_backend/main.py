@@ -1,4 +1,4 @@
-from database_comments import createTable
+from database_comments import createTables
 
-createTable()
+createTables()
 
