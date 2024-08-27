@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from pydantic import BaseModel
+import bcrypt
 
 import python_backend.database_comments as dbc
 
@@ -28,7 +29,7 @@ class LearnWord(BaseModel):
 @app.get("/learn_words", response_model=List[LearnWord])
 def read_words() -> List[LearnWord]:
     try:
-        records = dbc.import_table_content()  # Fetch data from the database
+        records = dbc.import_Words()
         if not records:
             raise HTTPException(status_code=404, detail="No words found")
 
@@ -74,4 +75,19 @@ def register_user(user: User):
         return {"message": "User added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-      
+ 
+class UserLogin(BaseModel):
+    identifier: str  # This will be either the username or email
+    password: str
+ 
+@app.post("/login")
+def log_in(user: UserLogin):
+    stored_password = dbc.import_User_data(user.identifier)
+    
+    if stored_password is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if not bcrypt.checkpw(user.password.encode('utf-8'), stored_password.encode('utf-8')):
+        raise HTTPException(status_code=401, detail="Incorrect identifier or password")
+    
+    return {"message": "Login successful"}
