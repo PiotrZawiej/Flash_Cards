@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from pydantic import BaseModel
-import bcrypt
+import hashlib
 
 import python_backend.database_comments as dbc
 
@@ -11,10 +11,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],  # Zezwól na dostęp z dowolnego źródła (zmień na konkretny adres, jeśli potrzebujesz)
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Zezwól na wszystkie metody (GET, POST, itd.)
+    allow_headers=["*"],  # Zezwól na wszystkie nagłówki
 )
 
 @app.get("/")
@@ -82,12 +82,13 @@ class UserLogin(BaseModel):
  
 @app.post("/login")
 def log_in(user: UserLogin):
-    stored_password = dbc.import_User_data(user.identifier)
-    
+    stored_password = dbc.import_User_data(user.identifier)  # Pobierz przechowywane hasło
+
     if stored_password is None:
         raise HTTPException(status_code=404, detail="User not found")
 
-    if not bcrypt.checkpw(user.password.encode('utf-8'), stored_password.encode('utf-8')):
+    # Bezpieczne porównanie hasła (bez hashowania)
+    if user.password != stored_password:
         raise HTTPException(status_code=401, detail="Incorrect identifier or password")
     
     return {"message": "Login successful"}
