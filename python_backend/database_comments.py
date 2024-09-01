@@ -85,6 +85,7 @@ def import_User_data(idetifier: str):
 
     finally:
         db.close()
+        
 
         
 # def create_tables():

@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, HTTPException, status, Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from pydantic import BaseModel
 import hashlib
+from starlette.middleware.sessions import SessionMiddleware
 
 import python_backend.database_comments as dbc
 
@@ -16,6 +17,8 @@ app.add_middleware(
     allow_methods=["*"],  # Zezwól na wszystkie metody (GET, POST, itd.)
     allow_headers=["*"],  # Zezwól na wszystkie nagłówki
 )
+
+app.add_middleware(SessionMiddleware, secret_key="1235")
 
 @app.get("/")
 def read_root():
@@ -81,7 +84,7 @@ class UserLogin(BaseModel):
     password: str
  
 @app.post("/login")
-def log_in(user: UserLogin):
+def log_in(user: UserLogin, request: Request):
     stored_password = dbc.import_User_data(user.identifier)  # Pobierz przechowywane hasło
 
     if stored_password is None:
@@ -91,4 +94,5 @@ def log_in(user: UserLogin):
     if user.password != stored_password:
         raise HTTPException(status_code=401, detail="Incorrect identifier or password")
     
+    request.session['user'] = user.identifier
     return {"message": "Login successful"}

@@ -19,7 +19,10 @@ document.getElementById('login-form').addEventListener('submit', async function 
         if (response.ok) {
             const result = await response.json();
             alert('Login successful!');
-            window.location.href = '/mainPage.html'; 
+
+            sessionStorage.setItem('user_id', result.user_id); // Store the user ID in sessionStorage
+
+            window.location.href = '/frontend/templates/mainPage.html'; 
         } else {
             // If the login failed, show an error message
             const errorData = await response.json();
@@ -31,3 +34,5 @@ document.getElementById('login-form').addEventListener('submit', async function 
         alert('An unexpected error occurred. Please try again later.');
     }
 });
+
+
