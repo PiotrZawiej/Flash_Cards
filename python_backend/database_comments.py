@@ -66,7 +66,7 @@ def Insert_User(email, username, password, birth_date):
     finally:
         db.close()
         
-def import_User_data(idetifier: str):
+def import_User_password(idetifier: str):
     try:
         db = sqlite3.connect('words_data.db')
         cursor = db.cursor()
@@ -85,6 +85,27 @@ def import_User_data(idetifier: str):
 
     finally:
         db.close()
+        
+def import_User_id(idetifier: str):
+    try:
+        db = sqlite3.connect('words_data.db')
+        cursor = db.cursor()
+
+        cursor.execute('SELECT user_id FROM Users WHERE username = ? OR email = ?', (idetifier,idetifier))
+        row = cursor.fetchone()  
+
+        if row:
+            return row[0]  
+        else:
+            return None
+
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+        return None
+
+    finally:
+        db.close()
+
         
 
         

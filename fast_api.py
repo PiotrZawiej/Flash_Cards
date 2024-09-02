@@ -1,9 +1,8 @@
-from fastapi import Depends, HTTPException, status, Request, FastAPI
+from fastapi import Depends, HTTPException, status, Response, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from pydantic import BaseModel
 import hashlib
-from starlette.middleware.sessions import SessionMiddleware
 
 import python_backend.database_comments as dbc
 
@@ -18,7 +17,6 @@ app.add_middleware(
     allow_headers=["*"],  # Zezwól na wszystkie nagłówki
 )
 
-app.add_middleware(SessionMiddleware, secret_key="1235")
 
 @app.get("/")
 def read_root():
@@ -84,15 +82,41 @@ class UserLogin(BaseModel):
     password: str
  
 @app.post("/login")
-def log_in(user: UserLogin, request: Request):
-    stored_password = dbc.import_User_data(user.identifier)  # Pobierz przechowywane hasło
+def log_in(user: UserLogin, response: Response):
+    # Pobierz przechowywane hasło na podstawie identyfikatora użytkownika
+    stored_password = dbc.import_User_data(user.identifier)
 
     if stored_password is None:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Bezpieczne porównanie hasła (bez hashowania)
+    # Sprawdź, czy wprowadzone hasło pasuje do przechowywanego
     if user.password != stored_password:
         raise HTTPException(status_code=401, detail="Incorrect identifier or password")
     
-    request.session['user'] = user.identifier
+    # Pobierz ID użytkownika na podstawie identyfikatora
+    user_id = dbc.import_User_id(user.identifier)
+
+    # Sprawdź, czy ID zostało poprawnie pobrane
+    if user_id is None:
+        raise HTTPException(status_code=500, detail="Could not retrieve user ID")
+
+    # Ustaw ID użytkownika w ciasteczku
+    response.set_cookie(key="user_id", value=str(user_id), httponly=True)
+    
     return {"message": "Login successful"}
+
+
+def get_current_user(request: Request):
+    
+    user_id = request.cookies.get("user_id")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    user = dbc.get_user_by_id(user_id)
+    if user is None:
+        raise HTTPException(status_code=401, detail="User not found")
+    return user
+
+@app.post("/logout")
+def logout(response: Response):
+    response.delete_cookie("user_id")
+    return {"message": "Logged out successfully"}
