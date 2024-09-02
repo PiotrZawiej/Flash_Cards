@@ -84,7 +84,7 @@ class UserLogin(BaseModel):
 @app.post("/login")
 def log_in(user: UserLogin, response: Response):
     # Pobierz przechowywane hasło na podstawie identyfikatora użytkownika
-    stored_password = dbc.import_User_data(user.identifier)
+    stored_password = dbc.import_User_password(user.identifier)
 
     if stored_password is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -94,21 +94,17 @@ def log_in(user: UserLogin, response: Response):
         raise HTTPException(status_code=401, detail="Incorrect identifier or password")
     
     # Pobierz ID użytkownika na podstawie identyfikatora
-    user_id = dbc.import_User_id(user.identifier)
-
-    # Sprawdź, czy ID zostało poprawnie pobrane
-    if user_id is None:
-        raise HTTPException(status_code=500, detail="Could not retrieve user ID")
-
-    # Ustaw ID użytkownika w ciasteczku
-    response.set_cookie(key="user_id", value=str(user_id), httponly=True)
-    
+    user_id = str(dbc.import_User_id(user.identifier))
+    response.set_cookie(key="user_id", value=user_id, httponly=True)
+    print(f"User ID set in cookie: {user_id}")  # Debugging line
     return {"message": "Login successful"}
 
 
 def get_current_user(request: Request):
     
     user_id = request.cookies.get("user_id")
+    
+    print(f"User ID set in cookie: {user_id}")  # Debugging line
     if not user_id:
         raise HTTPException(status_code=401, detail="Not authenticated")
     user = dbc.get_user_by_id(user_id)
@@ -120,3 +116,7 @@ def get_current_user(request: Request):
 def logout(response: Response):
     response.delete_cookie("user_id")
     return {"message": "Logged out successfully"}
+
+@app.get("/protected-route")
+def protected_route(current_user: User = Depends(get_current_user)):
+    return {"message": f"Welcome, {current_user.username}!"}

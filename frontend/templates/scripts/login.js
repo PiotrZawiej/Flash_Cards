@@ -20,7 +20,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
             const result = await response.json();
             alert('Login successful!');
 
-            sessionStorage.setItem('user_id', result.user_id); // Store the user ID in sessionStorage
+            
 
             window.location.href = '/frontend/templates/mainPage.html'; 
         } else {
