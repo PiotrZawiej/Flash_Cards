@@ -95,14 +95,14 @@ def log_in(user: UserLogin, response: Response):
     user_id = str(dbc.import_User_id(user.identifier))
     response.set_cookie(key="user_id", value=user_id, httponly=True, samesite='None', secure=True, path="/")
 
+@app.get("/main-page")
 def get_current_user(request: Request):
     
     user_id = request.cookies.get("user_id")
     
-    print(f"User ID set in cookie: {user_id}")  # Debugging line
     if not user_id:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    user = dbc.get_user_by_id(user_id)
+    user = dbc.import_User_id(user_id)
     if user is None:
         raise HTTPException(status_code=401, detail="User not found")
     return user
@@ -115,3 +115,4 @@ def logout(response: Response):
 @app.get("/protected-route")
 def protected_route(current_user: User = Depends(get_current_user)):
     return {"message": f"Welcome, {current_user.username}!"}
+
