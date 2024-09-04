@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from pydantic import BaseModel
 import hashlib
-
 import python_backend.database_comments as dbc
 
 
@@ -11,12 +10,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Zezwól na dostęp z dowolnego źródła (zmień na konkretny adres, jeśli potrzebujesz)
+    allow_origins=["http://127.0.0.1:5500"],  # Zezwól na dostęp z dowolnego źródła (zmień na konkretny adres, jeśli potrzebujesz)
     allow_credentials=True,
     allow_methods=["*"],  # Zezwól na wszystkie metody (GET, POST, itd.)
     allow_headers=["*"],  # Zezwól na wszystkie nagłówki
 )
-
 
 @app.get("/")
 def read_root():
@@ -95,10 +93,7 @@ def log_in(user: UserLogin, response: Response):
     
     # Pobierz ID użytkownika na podstawie identyfikatora
     user_id = str(dbc.import_User_id(user.identifier))
-    response.set_cookie(key="user_id", value=user_id, httponly=True)
-    print(f"User ID set in cookie: {user_id}")  # Debugging line
-    return {"message": "Login successful"}
-
+    response.set_cookie(key="user_id", value=user_id, httponly=True, samesite='None', secure=True, path="/")
 
 def get_current_user(request: Request):
     
