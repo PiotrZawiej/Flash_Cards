@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         // Wysłanie zapytania do serwera, aby sprawdzić, czy użytkownik jest zalogowany
         const response = await fetch('http://localhost:8000/main-page', {
             method: 'GET',
-            credentials: 'include'  // Uwzględnij ciasteczka w zapytaniu
+            credentials: 'include'  
         });
 
         if (response.ok) {

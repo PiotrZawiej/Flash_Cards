@@ -97,15 +97,7 @@ def log_in(user: UserLogin, response: Response):
 
 @app.get("/main-page")
 def get_current_user(request: Request):
-    
-    user_id = request.cookies.get("user_id")
-    
-    if not user_id:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    user = dbc.import_User_id(user_id)
-    if user is None:
-        raise HTTPException(status_code=401, detail="User not found")
-    return user
+    return {"main":"page"}
 
 @app.post("/logout")
 def logout(response: Response):
@@ -115,4 +107,9 @@ def logout(response: Response):
 @app.get("/protected-route")
 def protected_route(current_user: User = Depends(get_current_user)):
     return {"message": f"Welcome, {current_user.username}!"}
+
+@app.get("/check-cookies")
+def check_cookies(request: Request):
+    user_id = request.cookies.get("user_id")
+    return {"user_id": user_id}
 
