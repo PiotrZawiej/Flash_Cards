@@ -84,32 +84,38 @@ def log_in(user: UserLogin, response: Response):
     # Pobierz przechowywane hasło na podstawie identyfikatora użytkownika
     stored_password = dbc.import_User_password(user.identifier)
 
-    if stored_password is None:
-        raise HTTPException(status_code=404, detail="User not found")
-
     # Sprawdź, czy wprowadzone hasło pasuje do przechowywanego
-    if user.password != stored_password:
+    if stored_password is None or user.password != stored_password:
         raise HTTPException(status_code=401, detail="Incorrect identifier or password")
-    
+
     # Pobierz ID użytkownika na podstawie identyfikatora
     user_id = str(dbc.import_User_id(user.identifier))
-    response.set_cookie(key="user_id", value=user_id, httponly=True, samesite='None', secure=True, path="/")
+    
+    # Ustawienie ciasteczka (z zabezpieczeniem dla produkcji)
+    response.set_cookie(key="user_id", value=user_id, httponly=True, samesite='None', secure=False, path="/")
 
-@app.get("/main-page")
-def get_current_user(request: Request):
-    return {"main":"page"}
 
 @app.post("/logout")
 def logout(response: Response):
     response.delete_cookie("user_id")
     return {"message": "Logged out successfully"}
 
-@app.get("/protected-route")
-def protected_route(current_user: User = Depends(get_current_user)):
-    return {"message": f"Welcome, {current_user.username}!"}
-
-@app.get("/check-cookies")
-def check_cookies(request: Request):
+@app.get("/check-auth")
+def check_auth_status(request: Request):
     user_id = request.cookies.get("user_id")
-    return {"user_id": user_id}
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    # Pobierz username na podstawie user_id
+    username = dbc.import_UserName_by_id(user_id)
+    if username is None:
+        raise HTTPException(status_code=401, detail="User not found")
+    
+    return {"message": "Authenticated", "user": username}
+
+
+@app.get("/get_cookie")
+def get_cookie(request: Request):
+    user_id = request.cookies.get("user_id")
+    return {"user_id:": user_id}
 

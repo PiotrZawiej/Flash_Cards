@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function() {
     try {
         // Wysłanie zapytania do serwera, aby sprawdzić, czy użytkownik jest zalogowany
-        const response = await fetch('http://localhost:8000/main-page', {
+        const response = await fetch('http://localhost:8000/check-auth', {
             method: 'GET',
             credentials: 'include'  
         });
@@ -25,13 +25,23 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 });
 
-// Funkcja do obsługi wylogowania
 document.getElementById("logout-button").addEventListener("click", async function() {
-    await fetch('http://localhost:8000/logout', {
-        method: 'POST',
-        credentials: 'include'
-    });
+    try {
+        const response = await fetch('http://localhost:8000/logout', {
+            method: 'POST',
+            credentials: 'include'  
+        });
 
-    document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "login.html";
+        if (response.ok) {
+            // Udane wylogowanie, przekieruj użytkownika lub zaktualizuj interfejs
+            console.log("Wylogowano pomyślnie");
+            document.getElementById("logout-button").style.display = "none";
+            document.getElementById("login-button").style.display = "block";
+            document.getElementById("register-button").style.display = "block";
+        } else {
+            console.error('Błąd podczas wylogowywania');
+        }
+    } catch (error) {
+        console.error('Wystąpił błąd podczas wylogowywania:', error);
+    }
 });

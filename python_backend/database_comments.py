@@ -105,6 +105,21 @@ def import_User_id(idetifier: str):
 
     finally:
         db.close()
+        
+def import_UserName_by_id(id: str) -> str:
+    try:
+        with sqlite3.connect('words_data.db') as db:
+            cursor = db.cursor()
+            cursor.execute('SELECT username FROM Users WHERE user_id = ?', (id,))
+            row = cursor.fetchone()
+
+            if row:
+                return row[0]
+            return None
+
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+        return None
 
         
 
