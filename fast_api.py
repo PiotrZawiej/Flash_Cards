@@ -92,12 +92,12 @@ def log_in(user: UserLogin, response: Response):
     user_id = str(dbc.import_User_id(user.identifier))
     
     # Ustawienie ciasteczka (z zabezpieczeniem dla produkcji)
-    response.set_cookie(key="user_id", value=user_id, httponly=True, samesite='None', secure=False, path="/")
+    response.set_cookie(key="user_id", value=user_id, httponly=True, samesite='None', secure=True, path="/")
 
 
 @app.post("/logout")
 def logout(response: Response):
-    response.delete_cookie("user_id")
+    response.delete_cookie(key="user_id", httponly=True, samesite='None', secure=True, path="/")
     return {"message": "Logged out successfully"}
 
 @app.get("/check-auth")
