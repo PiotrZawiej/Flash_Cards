@@ -20,10 +20,12 @@ app.add_middleware(
 def read_root():
     return {"App": "Flashcards"}
 
+
 class LearnWord(BaseModel):
     id: int
     word: str
     definition: str
+
 
 @app.get("/learn_words", response_model=List[LearnWord])
 def read_words() -> List[LearnWord]:
@@ -38,9 +40,11 @@ def read_words() -> List[LearnWord]:
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 class Word(BaseModel):
     word: str
     definition: str   
+
 
 @app.post("/add_word")
 def add_words(word: Word):
@@ -49,6 +53,7 @@ def add_words(word: Word):
         return {"message": "word added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.delete("/learn_words/{id}")
 def deleteFlashCard(id: int):
@@ -78,6 +83,7 @@ def register_user(user: User):
 class UserLogin(BaseModel):
     identifier: str  # This will be either the username or email
     password: str
+
  
 @app.post("/login")
 def log_in(user: UserLogin, response: Response):
@@ -99,6 +105,7 @@ def log_in(user: UserLogin, response: Response):
 def logout(response: Response):
     response.delete_cookie(key="user_id", httponly=True, samesite='None', secure=True, path="/")
     return {"message": "Logged out successfully"}
+
 
 @app.get("/check-auth")
 def check_auth_status(request: Request):
