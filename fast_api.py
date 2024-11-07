@@ -10,10 +10,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500"],  # Zezwól na dostęp z dowolnego źródła (zmień na konkretny adres, jeśli potrzebujesz)
+    allow_origins=["http://127.0.0.1:5500"],  
     allow_credentials=True,
-    allow_methods=["*"],  # Zezwól na wszystkie metody (GET, POST, itd.)
-    allow_headers=["*"],  # Zezwól na wszystkie nagłówki
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 @app.get("/")
@@ -37,6 +37,19 @@ def read_words() -> List[LearnWord]:
         words = [LearnWord(id=r[0], word=r[1], definition=r[2]) for r in records]  # Format each record
         return words
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+
+class Flashcard_set(BaseModel):
+    set_name: str
+
+
+@app.post("/create_Set")
+def add_set(set_name: Flashcard_set):
+    try:
+        dbc.new_Flashcardset(set_name.set_name)
+        return {"message": "word added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -79,6 +92,7 @@ def register_user(user: User):
         return {"message": "User added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+ 
  
 class UserLogin(BaseModel):
     identifier: str  # This will be either the username or email
