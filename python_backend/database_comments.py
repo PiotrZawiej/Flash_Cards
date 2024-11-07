@@ -1,24 +1,6 @@
 import sqlite3
 
 
-def add_content_table(word, definition):
-
-    try:
-        db = sqlite3.connect('words_data.db') 
-        cursor = db.cursor()
-
-        cursor.execute('INSERT INTO Words (word, definition) values (?, ?)', (word, definition))
-
-        db.commit()
-
-    except sqlite3.Error as e:
-        print(f"an error occurred:{e}")
-    
-    finally:
-        db.close()
-
-
-
 def import_Words():
 
     try:
@@ -65,7 +47,8 @@ def Insert_User(email, username, password, birth_date):
         print(f"an error occurred:{e}")
     finally:
         db.close()
-        
+
+
 def import_User_password(idetifier: str):
     try:
         db = sqlite3.connect('words_data.db')
@@ -86,6 +69,7 @@ def import_User_password(idetifier: str):
     finally:
         db.close()
         
+
 def import_User_id(idetifier: str):
     try:
         db = sqlite3.connect('words_data.db')
@@ -106,6 +90,7 @@ def import_User_id(idetifier: str):
     finally:
         db.close()
         
+
 def import_UserName_by_id(id: str) -> str:
     try:
         with sqlite3.connect('words_data.db') as db:
@@ -120,10 +105,9 @@ def import_UserName_by_id(id: str) -> str:
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
         return None
-
+    
         
 
-        
 # def create_tables():
 #     try:
 #         db = sqlite3.connect('words_data.db')

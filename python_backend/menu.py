@@ -1,3 +1,4 @@
+import python_backend.add_content_table
 import python_backend.database_comments as dbc
 
 
@@ -15,7 +16,7 @@ def menu():
             print("pls tipe definition of word")
             description = input()
 
-            dbc.add_content_table(word, description)
+            python_backend.add_content_table.add_content_table(word, description)
 
         case "2":
             for r in dbc.import_table_content():
