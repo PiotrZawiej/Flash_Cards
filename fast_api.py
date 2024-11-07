@@ -16,6 +16,7 @@ app.add_middleware(
     allow_headers=["*"],  # Zezwól na wszystkie nagłówki
 )
 
+#test
 @app.get("/")
 def read_root():
     return {"App": "Flashcards"}
