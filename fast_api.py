@@ -125,4 +125,3 @@ def check_auth_status(request: Request):
 def get_cookie(request: Request):
     user_id = request.cookies.get("user_id")
     return {"user_id:": user_id}
-
