@@ -49,7 +49,7 @@ class Flashcard_set(BaseModel):
 def add_set(set_name: Flashcard_set):
     try:
         dbc.new_Flashcardset(set_name.set_name)
-        return {"message": "word added successfully"}
+        return {"message": "set added successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
