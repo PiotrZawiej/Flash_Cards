@@ -1,4 +1,4 @@
-import python_backend.database_comments as dbc
+import python_backend.fastapi.database_comments as dbc
 
 
 def menu():
