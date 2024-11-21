@@ -1,4 +1,4 @@
-from database_comments import createTables
+from python_backend.fastapi.database_comments import createTables
 
 createTables()
 
