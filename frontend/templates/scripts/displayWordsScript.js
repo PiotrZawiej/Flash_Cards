@@ -2,7 +2,7 @@ import { createDeleteButton } from "./delateWord.js";
 
 async function fetchWords() {
     try {
-        const response = await fetch('http://localhost:8000/learn_words');
+        const response = await fetch('http://localhost:8000/lashcard/learn_words');
         const words = await response.json();
         displayWords(words);
     } catch (error) {

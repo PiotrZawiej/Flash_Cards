@@ -7,7 +7,7 @@ export function createDeleteButton(wordItem, wordObj) {
         event.stopPropagation();
 
         try {
-            const response = await fetch(`http://localhost:8000/learn_words/${wordObj.id}`, {
+            const response = await fetch(`http://localhost:8000/lashcard/learn_words/${wordObj.id}`, {
                 method: 'DELETE'
             });
 

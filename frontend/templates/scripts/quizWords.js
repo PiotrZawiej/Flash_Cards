@@ -4,7 +4,7 @@ let quizWords = []
 
         async function fetchQuizWords() {
             try {
-                const response = await fetch('http://localhost:8000/learn_words');
+                const response = await fetch('http://localhost:8000/flashcard/learn_words');
                 quizWords = await response.json();
                 if (quizWords.length > 0) {
                     displayWord();
