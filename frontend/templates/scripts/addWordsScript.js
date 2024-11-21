@@ -5,7 +5,7 @@ document.getElementById('wordForm').addEventListener('submit', async function(ev
     const definition = document.getElementById('definition').value;
 
     try {
-        const response = await fetch('http://localhost:8000/add_word', {
+        const response = await fetch('http://localhost:8000/lashcard/add_word', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

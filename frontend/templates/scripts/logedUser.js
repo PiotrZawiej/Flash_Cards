@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function() {
     try {
         // Wysłanie zapytania do serwera, aby sprawdzić, czy użytkownik jest zalogowany
-        const response = await fetch('http://localhost:8000/check-auth', {
+        const response = await fetch('http://localhost:8000/auth/check-auth', {
             method: 'GET',
             credentials: 'include'  
         });

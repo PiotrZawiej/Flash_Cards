@@ -4,7 +4,7 @@ document.getElementById("setForm").addEventListener('submit', async function add
     const setName = document.getElementById('setName').value;
 
     try{
-        const response = await fetch("http://localhost:8000/create_Set", {
+        const response = await fetch("http://localhost:8000/sets/create_Set", {
             metchod: 'POST',
             headers: {
                 'Content-Type': 'application/json'
