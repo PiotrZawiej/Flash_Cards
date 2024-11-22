@@ -4,7 +4,7 @@ from models import Flashcard_set
 import database as dbc
 
 
-router = APIRouter(prefix="/sets", tags=["Flashcrd sets"])
+router = APIRouter(prefix="/sets", tags=["Flashcard sets"])
 
 
 @router.post("/create_Set")
