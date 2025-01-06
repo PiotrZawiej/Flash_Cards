@@ -2,24 +2,26 @@ document.getElementById("setForm").addEventListener('submit', async function add
     event.preventDefault();
 
     const setName = document.getElementById('setName').value;
+    const userID = document.cookie
+    console.log(document.cookie)
 
-    try{
-        const response = await fetch("http://localhost:8000/sets/create_Set", {
-            metchod: 'POST',
+    try {
+        const response = await fetch("http://127.0.0.1:8000/sets/create_Set", {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(setName)
+            body: JSON.stringify({ set_name: setName, user_id: userID })
         });
-        if (response.ok){
+
+        if (response.ok) {
             const result = await response.json();
             alert(result.message);
-        }else {
-            const error =await response.json();
+        } else {
+            const error = await response.json();
             alert(`Error: ${error.detail}`);
-            
         }
-    }   catch (error){
-        alert('An unexpected error occurred.')
-    };
+    } catch (error) {
+        alert('An unexpected error occurred.');
+    }
 });

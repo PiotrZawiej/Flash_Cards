@@ -9,6 +9,7 @@ class LearnWord(BaseModel):
 
 class Flashcard_set(BaseModel):
     set_name: str
+    user_id: int
 
 
 class Word(BaseModel):
