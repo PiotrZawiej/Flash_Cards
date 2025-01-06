@@ -28,7 +28,7 @@ def log_in(user: UserLogin, response: Response):
     user_id = str(dbc.import_User_id(user.identifier))
     
     # Ustawienie ciasteczka (z zabezpieczeniem dla produkcji)
-    response.set_cookie(key="user_id", value=user_id, httponly=True, samesite='None', secure=True, path="/")
+    response.set_cookie(key="user_id", value=user_id, samesite='None', path="/")
 
 
 @router.post("/logout")
